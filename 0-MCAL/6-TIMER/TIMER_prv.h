@@ -6,33 +6,32 @@
 #define TIMER_OVERFLOW_INT    2U
 #define TIMER_COMPARE_INT     3U   
 
+#define WGM13_12_MASK                       0B00001100
+#define WGM11_10_MASK                       0B00000011
 
+#define TCCR_CON(num)          TCCR##num
+#define TCCR_COM_CON(num,num2,idx)          TCCR##num##_COM##num2##idx
 
-#define TIMER_NORMAL       1U
-#define TIMER_PWM          2U
-#define TIMER_CTC          3U
-#define TIMER_FAST_PWM     4U
+#define TCCR_WGM_CON(num,idx)          TCCR##num##_WGM##idx
 
+#define __TIMER_ComStamp(num,num2,idx1,idx2)      do{if (copy_COM == TIMER_COM_NORMAL){   \
+			CLS_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx1)); CLS_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx2));    }\
+		else if (copy_COM == TIMER_COM_TOGGLE || copy_COM == TIMER_COM_RESERVED){\
+			SET_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx1)); CLS_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx2)); }\
+		else if (copy_COM == TIMER_COM_CLEAR){\
+			CLS_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx1)); SET_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx2)); }\
+		else if (copy_COM == TIMER_COM_SET){\
+			SET_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx1)); SET_BIT(TCCR_CON(num) , TCCR_COM_CON(num,num2,idx2)); }\
+            else{/**/}}while(0)
 
-
-// #define TIMER_NORMAL       1U
-#define TIMER_TOGGLE       2U
-#define TIMER_CLEAR        3U
-#define TIMER_SET          4U
-#define TIMER_RESERVED     5U
-
-
- 
-#define TIMER_NO_CLK                    0U
-#define TIMER_NO_PS                     1U
-#define TIMER_PS_8                      2U
-#define TIMER_PS_64                     3U
-#define TIMER_PS_256                    4U
-#define TIMER_PS_1024                   5U
-#define TIMER_EXT_CLK_FALLING_EDGE      6U
-#define TIMER_EXT_CLK_RISING_EDGE       7U
-
-
-
+#define __TIMER_WGMStamp(num,idx1,idx2) do{if (copy_WGM == TIMER0_2WGM_NORMAL){  \
+			CLS_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx1)); CLS_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx2));  }  \
+		else if (copy_WGM == TIMER0_2WGM_PWM){\
+			SET_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx1)); CLS_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx2)); }\
+		else if (copy_WGM == TIMER0_2WGM_CTC){\
+			CLS_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx1)); SET_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx2));} \
+		else if (copy_WGM == TIMER0_2WGM_FAST_PWM){\
+            SET_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx1)); SET_BIT(TCCR_CON(num) , TCCR_WGM_CON(num,idx2));}\
+		else{/**/}}while(0)
 
 #endif

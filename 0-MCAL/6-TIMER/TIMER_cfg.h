@@ -1,27 +1,27 @@
 #ifndef TIMER_CFG_H
 #define TIMER_CFG_H
-#include "TIMER_interface.h"
 /*
-* configure TIMER0 interrupt mask, options : TIMER_DISBLE_INT
-*                                           2-TIMER_OVERFLOW_INT
-*                                           3-TIMER_COMPARE_INT                                      
+* configure TIMER0 Waveform Generation Mode, options : 1-TIMER0_2WGM_NORMAL
+*                                                    2-TIMER0_2WGM_PWM  
+*                                                    3-TIMER0_2WGM_CTC
+*                                                    4-TIMER0_2WGM_FAST_PWM
 */
-#define TIMER_u8TI0_INTM              TIMER_OVERFLOW_INT
+#define TIMER_u8TI0_WGM              TIMER0_2WGM_FAST_PWM
+#define TIMER_u8TI2_WGM              TIMER0_2WGM_NORMAL
+
+/*configure TIMER1 Waveform Generation Mode chose mode number [0:14] page 107*/
+#define TIMER_u8TI1_WGM              TIMER_WGM_PWM_FAST_ICR1
 /*
-* configure TIMER0 Waveform Generation Mode, options : 1-TIMER_NORMAL
-*                                                    2-TIMER_PWM  
-*                                                    3-TIMER_CTC
-*                                                    4-TIMER_FAST_PWM
+* configure TIMER0 Compare Match Output Mode, options : 1-TIMER_COM_NORMAL
+*                                                    2-TIMER_COM_TOGGLE  
+*                                                    3-TIMER_COM_CLEAR
+*                                                    4-TIMER_COM_SET
+*                                                    5-TIMER_COM_RESERVED
 */
-#define TIMER_u8TI0_WGM              TIMER_NORMAL
-/*
-* configure TIMER0 Compare Match Output Mode, options : 1-TIMER_NORMAL
-*                                                    2-TIMER_TOGGLE  
-*                                                    3-TIMER_CLEAR
-*                                                    4-TIMER_SET
-*                                                    5-TIMER_RESERVED
-*/
-#define TIMER_u8TI0_COM             TIMER_NORMAL
+#define TIMER_u8TI0_COM             TIMER_COM_CLEAR
+#define TIMER_u8TI1A_COM            TIMER_COM_CLEAR
+#define TIMER_u8TI1B_COM            TIMER_COM_CLEAR
+#define TIMER_u8TI2_COM             TIMER_COM_NORMAL
 /* 
 * configure TIMER0 the clock source to be used: 1-TIMER_NO_CLK
 *                                           2-TIMER_NO_PS
@@ -33,7 +33,8 @@
 *                                           8-TIMER_EXT_CLK_RISING_EDGE
 */
 #define TIMER_u8TI0_CLK              TIMER_PS_1024
-
+#define TIMER_u8TI1_CLK              TIMER_PS_8
+#define TIMER_u8TI2_CLK              TIMER_NO_CLK
 
 
 #endif

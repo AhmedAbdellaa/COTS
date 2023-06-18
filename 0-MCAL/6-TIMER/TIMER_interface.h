@@ -21,7 +21,7 @@ typedef enum
 #define TIMER_WGM_PWM_FAST_8            5u
 #define TIMER_WGM_PWM_FAST_9            6u
 #define TIMER_WGM_PWM_FAST_10           7u
-#define TIMER_WGM_PWM_PFC_ISR1          8u
+#define TIMER_WGM_PWM_PFC_ICR1          8u
 #define TIMER_WGM_PWM_PFC_OCR1          9u
 #define TIMER_WGM_PWM_PC_ICR1           10u
 #define TIMER_WGM_PWM_PC_OCR1A          11u
@@ -48,6 +48,9 @@ typedef enum
 #define TIMER_PS_1024                   5U
 #define TIMER_EXT_CLK_FALLING_EDGE      6U
 #define TIMER_EXT_CLK_RISING_EDGE       7U
+
+#define ICU_FALLING_EDGE 1u
+#define ICU_RISING_EDGE 2u
 // typedef enum
 // {
 //     TIMER0_2WGM_NORMAL = 0u,
@@ -136,7 +139,27 @@ void TIMER_voidChangWGM_Mode(TIMER_TINum_t copy_TINUM, uint8 copy_WGM);
 
 /// @brief start doing pwm for given waveform in timer_init or TIMER_voidChangWGM_Mode(...)
 /// @param copy_TINUM timer number choose from : [TIMER0,TIMER1A,TIMER1B,TIMER2]
-/// @param reference_TimerCallbackConf pass two value 1:OCR value for compare and if choose TIMER_WGM_PWM_FAST_ICR1 pass ICR value 
-void TIMER_voidStart_PWM(TIMER_TINum_t copy_TINUM, TIMER_CALLBACK_CONFIG_t *reference_TimerCallbackConf);
+/// @param copy_u16OCR OCR value for compare 
+///@param copy_u16ICR1 if choose TIMER_WGM_PWM_FAST_ICR1 pass ICR value 
+void TIMER_voidStart_PWM(TIMER_TINum_t copy_TINUM,uint16 copy_u16OCR,uint16 copy_u16ICR1);
+void TIMER_voidSetTCNT(TIMER_TINum_t copy_TINUM,uint16 copy_u16TCNTVal);
+
+/// @brief initialize ICU base on configuration file **timer1 must be initialize before
+void ICU_voidInit(void);
+
+/// @brief change trigger source for icu unit
+/// @param copy_u8TrSrc choose from [ICU_FALLING_EDGE ,ICU_RISING_EDGE]
+void ICU_voidSetTriggerSrc(uint8 copy_u8TrSrc);
+
+/// @brief enable ICU interrupt 
+/// @param copy_pvFuncPtr address to function to execute when source triggered
+/// @return error state if everything is ok will return OK
+uint8 ICU_u8IntEnable(void(*copy_pvFuncPtr)(void));
+
+/// @brief disable ICU interrupt 
+void ICU_voidIntDisable();
+
+/// @brief get ICR1 register value
+uint16 ICU_u16GetICRVal();
 
 #endif

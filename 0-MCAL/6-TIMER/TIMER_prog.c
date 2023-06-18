@@ -2,7 +2,7 @@
 #include "../../libraries/BIT_MATH.h"
 #include "../../libraries/ErrType.h"
 #include "../../libraries/STD_TYPES_H.h"
-#include "TIMER_interface.h"
+#include "./TIMER_interface.h"
 #include "TIMER_reg.h"
 #include "TIMER_prv.h"
 #include "TIMER_cfg.h"
@@ -75,9 +75,9 @@ uint8 TIMER_u8Start_COM_Interrupt(TIMER_TINum_t copy_TINUM, TIMER_CALLBACK_CONFI
 			break;
 		case TIMER1A:
 			// ISR function address
-			TIMER_PFunctionPtr_COM[TIMER1] = copy_pvFuncPtr;
+			TIMER_PFunctionPtr_COM[TIMER1A] = copy_pvFuncPtr;
 			// preload and count of COM to reach time needed
-			Global_TimerCallbackConf_COM[TIMER1] = reference_TimerCallbackConf;
+			Global_TimerCallbackConf_COM[TIMER1A] = reference_TimerCallbackConf;
 			// initialize preload value
 			OCR1A = reference_TimerCallbackConf->TIMER_u16OCR_TCNT_initVal;
 			// enable interrupt
@@ -85,9 +85,9 @@ uint8 TIMER_u8Start_COM_Interrupt(TIMER_TINum_t copy_TINUM, TIMER_CALLBACK_CONFI
 			break;
 		case TIMER1B:
 			// ISR function address
-			TIMER_PFunctionPtr_COM[TIMER1] = copy_pvFuncPtr;
+			TIMER_PFunctionPtr_COM[TIMER1B] = copy_pvFuncPtr;
 			// preload and count of COM to reach time needed
-			Global_TimerCallbackConf_COM[TIMER1] = reference_TimerCallbackConf;
+			Global_TimerCallbackConf_COM[TIMER1B] = reference_TimerCallbackConf;
 			// initialize preload value
 			OCR1B = reference_TimerCallbackConf->TIMER_u16OCR_TCNT_initVal;
 			// enable interrupt
@@ -151,13 +151,13 @@ void TIMER_voidChangCOM_Mode(TIMER_TINum_t copy_TINUM, uint8 copy_COM)
 	switch (copy_TINUM)
 	{
 	case TIMER0:
-		__TIMER_ComStamp(0,0,0,1);
+		__TIMER_ComStamp(0, 0, 0, 1);
 		break;
 	case TIMER1A:
-		__TIMER_ComStamp(1A,1A,0,1);
+		__TIMER_ComStamp(1A, 1A, 0, 1);
 		break;
 	case TIMER1B:
-		__TIMER_ComStamp(1A,1B,0,1);
+		__TIMER_ComStamp(1A, 1B, 0, 1);
 		break;
 	case TIMER2:
 
@@ -178,31 +178,32 @@ void TIMER_voidChangWGM_Mode(TIMER_TINum_t copy_TINUM, uint8 copy_WGM)
 		// __TIMER_WGMStamp(0,00,01) ;
 		break;
 	case TIMER1:
-		TCCR1B = ((TCCR1B_WGM_MASK & TCCR1B) | (((TIMER_u8TI1_WGM)&WGM13_12_MASK) << 1));
-		TCCR1A = ((TCCR1A_WGM_MASK & TCCR1A) | ((TIMER_u8TI1_WGM)&WGM11_10_MASK));
+		TCCR1B = ((TCCR1B_WGM_MASK & TCCR1B) | (((copy_WGM)&WGM13_12_MASK) << 1));
+		TCCR1A = ((TCCR1A_WGM_MASK & TCCR1A) | ((copy_WGM)&WGM11_10_MASK));
 		break;
 	default:
 		break;
 	}
 }
 
-void TIMER_voidStart_PWM(TIMER_TINum_t copy_TINUM, TIMER_CALLBACK_CONFIG_t *reference_TimerCallbackConf){
+void TIMER_voidStart_PWM(TIMER_TINum_t copy_TINUM,uint16 copy_u16OCR,uint16 copy_u16ICR1)
+{
 	switch (copy_TINUM)
 	{
 	case TIMER0:
-	OCR0 = reference_TimerCallbackConf->TIMER_u16OCR_TCNT_initVal;
+		OCR0 = copy_u16OCR;
 		break;
 	case TIMER1A:
 		// compare on
-		OCR1A = reference_TimerCallbackConf->TIMER_u16OCR_TCNT_initVal;
+		OCR1A = copy_u16OCR;
 		// overflow on (top)
-		ICR1 = (uint16)reference_TimerCallbackConf->TIMER_U32ISRDoNum_ICR1;		
+		ICR1 = copy_u16ICR1;
 		break;
 	case TIMER1B:
 		// overflow on (top)
-		OCR1B = reference_TimerCallbackConf->TIMER_u16OCR_TCNT_initVal;
-		ICR1 = (uint16)reference_TimerCallbackConf->TIMER_U32ISRDoNum_ICR1;
-		
+		OCR1B = copy_u16OCR;
+		ICR1 = copy_u16ICR1;
+
 		break;
 	case TIMER2:
 
@@ -295,10 +296,91 @@ void TIMER1_voidInit(void)
 	TCCR1B |= TIMER_u8TI1_CLK;
 }
 
+void TIMER_voidSetTCNT(TIMER_TINum_t copy_TINUM,uint16 copy_u16TCNTVal){
+
+switch (copy_TINUM)
+	{
+	case TIMER0:
+	TCNT0 = (uint8)copy_u16TCNTVal;
+		break;
+	case TIMER1:
+	TCNT1 = copy_u16TCNTVal;
+		break;
+	case TIMER2:
+
+		break;
+	default:
+		break;
+	}
+}
+/****************************ICU*******************************/
+void ICU_voidInit(void)
+{
+	// // setWaveform Generation Mode
+	// TCCR1B = ((TCCR1B_WGM_MASK & TCCR1B) | (((12)&WGM13_12_MASK) << 1));
+	// TCCR1A = ((TCCR1A_WGM_MASK & TCCR1A) | ((12)&WGM11_10_MASK));
+
+#if ICU_u8TriggerSrc == ICU_RISING_EDGE
+	SET_BIT(TCCR1B, TCCR1B_ICES1);
+#elif ICU_u8TriggerSrc == ICU_FALLING_EDGE
+	CLS_BIT(TCCR1B, TCCR1B_ICES1);
+#else
+#error "wrong ICU_u8TriggerSrc"
+#endif
+	// // Clock Select Bit Description
+	// TCCR1B &= TCCR1B_CS_Mask;
+	// TCCR1B |= TIMER_u8TI1_CLK;
+	
+}
+void ICU_voidSetTriggerSrc(uint8 copy_u8TrSrc)
+{
+	if (copy_u8TrSrc == ICU_RISING_EDGE)
+		SET_BIT(TCCR1B, TCCR1B_ICES1);
+	else if (copy_u8TrSrc == ICU_FALLING_EDGE)
+		CLS_BIT(TCCR1B, TCCR1B_ICES1);
+	else
+	{
+		/**/
+	}
+}
+uint8 ICU_u8IntEnable(void (*copy_pvFuncPtr)(void))
+{uint8 Local_u8ErrorState = OK;
+	if(copy_pvFuncPtr != NULL){
+		TIMER_PFunctionPtr_ISR = copy_pvFuncPtr;
+		// enable interrupt
+	SET_BIT(TIMSK, TIMSK_TICIE1);
+	}else{
+		Local_u8ErrorState = NULL_PTR;
+	}
+	return Local_u8ErrorState;
+}
+void ICU_voidIntDisable()
+{
+	// disable interrupt
+	CLS_BIT(TIMSK, TIMSK_TICIE1);
+}
+uint16 ICU_u16GetICRVal()
+{
+	return ICR1;
+}
+
+/****************************end ICU*******************************/
 // 5 $008 TIMER2 COMP Timer/Counter2 Compare Match
 // 6 $00A TIMER2 OVF Timer/Counter2 Overflow
 // 7 $00C TIMER1 CAPT Timer/Counter1 Capture Event
+void __vector_6(void) __attribute__((signal));
+void __vector_6(void)
+{
+	if (TIMER_PFunctionPtr_ISR != NULL)
+	{
 
+			TIMER_PFunctionPtr_ISR();
+	}
+	else
+	{
+		/*do nothing*/
+	}
+}
 // 8 $00E TIMER1 COMP A Timer/Counter1 Compare Match A
 void __vector_7(void) __attribute__((signal));
 void __vector_7(void)

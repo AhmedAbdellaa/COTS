@@ -17,11 +17,11 @@
 #define TIFR_OCIF0 1U  //Timer/Counter0 Output Compare Match Flag
 #define TIFR_TOIF0 0U  //Timer/Counter0 Overflow Flag
 
-#define TIMSK_OCF1A    4U  //Timer/Counter1, Output Compare A Match Flag
-#define TIMSK_OCF1B    3U  //Timer/Counter1, Output Compare B Match Flag
+#define TIFR_OCF1A    4U  //Timer/Counter1, Output Compare A Match Flag
+#define TIFR_OCF1B    3U  //Timer/Counter1, Output Compare B Match Flag
 
-#define TIMSK_ICF1    5U  //Timer/Counter1, Input Capture Flag
-#define TIMSK_TOV1    2U  //Timer/Counter1, Overflow Flag
+#define TIFR_ICF1    5U  //Timer/Counter1, Input Capture Flag
+#define TIFR_TOV1    2U  //Timer/Counter1, Overflow Flag
 /*************************timer0****************************************/
 //define Timer/Counter Control Register
 #define TCCR0 *((volatile uint8*)0x53)

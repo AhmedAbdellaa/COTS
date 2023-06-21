@@ -1,7 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
 
-sint32 MAP(sint32 copy_s32InputRangeMin, sint32 copy_s32InputRangeMax,
-           sint32 copy_s32OutputRangeMin, sint32 copy_s32OutputRangeMax, sint32 copy_s32InputValue);
-
+f64 MAP(f64 copy_f64InputRangeMin, f64 copy_f64InputRangeMax,
+		f64 copy_f64OutputRangeMin, f64 copy_f64OutputRangeMax, f64 copy_f64InputValue);
 #endif

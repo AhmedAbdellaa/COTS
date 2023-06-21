@@ -10,7 +10,10 @@ uint8 STM_u8Rotate(const STM_CONFIG_t *referance_stepper, uint16 copy_u16Angle, 
     uint8 Local_u8ErrorType = OK;
     if (referance_stepper != NULL)
     {
-
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->bluePin, DIO_PIN_HIGH);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->pinkPin, DIO_PIN_HIGH);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->yellowPin, DIO_PIN_HIGH);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->orangePin, DIO_PIN_HIGH);
 
         /*360(full roatate)/0.1758(full step degree) ) = 2048 (full step counts)*/
         uint16 local_u16steps = ((uint32)copy_u16Angle * 2048UL) / 360UL; // convert degree to number of full step
@@ -80,10 +83,10 @@ uint8 STM_u8Rotate(const STM_CONFIG_t *referance_stepper, uint16 copy_u16Angle, 
     if (Local_u8ErrorType == OK){
     	//
 //    	_delay_ms(10);
-		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->bluePin, DIO_PIN_HIGH);
-		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->pinkPin, DIO_PIN_HIGH);
-		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->yellowPin, DIO_PIN_HIGH);
-		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->orangePin, DIO_PIN_HIGH);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->bluePin, DIO_PIN_LOW);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->pinkPin, DIO_PIN_LOW);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->yellowPin, DIO_PIN_LOW);
+		DIO_u8_SetPinVal(referance_stepper->port, referance_stepper->orangePin, DIO_PIN_LOW);
 
     }
     return Local_u8ErrorType;

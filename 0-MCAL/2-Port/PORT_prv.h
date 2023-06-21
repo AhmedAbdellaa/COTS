@@ -1,14 +1,14 @@
 #ifndef PORT_PRV_H
 #define PORT_PRV_H
 
-#define INPUT    0u
-#define OUTPUT    1u
+#define INPUT    0
+#define OUTPUT    1
 
-#define fLOATAING  0u
-#define PULLEDUP    1u
+#define fLOATAING  0
+#define PULLEDUP    1
 
-#define LOW 0u
-#define HIGH 1u
+#define LOW 0
+#define HIGH 1
 
 #define CONC_HELPER(p7,p6,p5,p4,p3,p2,p1,p0)  0b##p7##p6##p5##p4##p3##p2##p1##p0
 #define CONC(p7,p6,p5,p4,p3,p2,p1,p0)   CONC_HELPER(p7,p6,p5,p4,p3,p2,p1,p0)

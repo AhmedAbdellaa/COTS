@@ -7,8 +7,7 @@
 #define ENABLED     1U
 #define DISABLED    2u
 
-#define CLCD_CLEAR_CMD 0X01
-#define CLCD_RESETCURSOR_CMD 0X10
+
 
 static void _helper_VoidReverseBuffer(uint8* ref_u8Buffer, uint8 copy_u8StartIndex,uint8 copy_u8EndIndex);
 

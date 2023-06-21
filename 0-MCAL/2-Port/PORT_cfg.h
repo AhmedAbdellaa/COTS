@@ -16,8 +16,8 @@ configure pin initial value Options: 1- INPUT
 
 #define PORTB_PIN0_DIR  INPUT
 #define PORTB_PIN1_DIR  INPUT
-#define PORTB_PIN2_DIR  INPUT
-#define PORTB_PIN3_DIR  INPUT
+#define PORTB_PIN2_DIR  OUTPUT
+#define PORTB_PIN3_DIR  OUTPUT
 #define PORTB_PIN4_DIR  INPUT
 #define PORTB_PIN5_DIR  INPUT
 #define PORTB_PIN6_DIR  INPUT
@@ -25,10 +25,10 @@ configure pin initial value Options: 1- INPUT
 
 #define PORTC_PIN0_DIR  INPUT
 #define PORTC_PIN1_DIR  INPUT
-#define PORTC_PIN2_DIR  INPUT
+#define PORTC_PIN2_DIR  OUTPUT
 #define PORTC_PIN3_DIR  OUTPUT
 #define PORTC_PIN4_DIR  OUTPUT
-#define PORTC_PIN5_DIR  INPUT
+#define PORTC_PIN5_DIR  OUTPUT
 #define PORTC_PIN6_DIR  INPUT
 #define PORTC_PIN7_DIR  INPUT
 
@@ -50,7 +50,7 @@ configure pin direction Options: A in case pin is input 0 FLoating
                                                             1-HIGH
 */
         
-#define PORTA_PIN0_INITVAL  LOW
+#define PORTA_PIN0_INITVAL  fLOATAING
 #define PORTA_PIN1_INITVAL  fLOATAING
 #define PORTA_PIN2_INITVAL  fLOATAING
 #define PORTA_PIN3_INITVAL  fLOATAING
@@ -70,10 +70,10 @@ configure pin direction Options: A in case pin is input 0 FLoating
 
 #define PORTC_PIN0_INITVAL  fLOATAING
 #define PORTC_PIN1_INITVAL  fLOATAING
-#define PORTC_PIN2_INITVAL  fLOATAING
+#define PORTC_PIN2_INITVAL  LOW
 #define PORTC_PIN3_INITVAL  LOW
 #define PORTC_PIN4_INITVAL  LOW
-#define PORTC_PIN5_INITVAL  fLOATAING
+#define PORTC_PIN5_INITVAL  LOW
 #define PORTC_PIN6_INITVAL  fLOATAING
 #define PORTC_PIN7_INITVAL  fLOATAING
 

@@ -1,7 +1,8 @@
 #ifndef CLCD_INTERFACE_H
 #define CLCD_INTERFACE_H
 
-
+#define CLCD_CLEAR_CMD 0X01
+#define CLCD_RESETCURSOR_CMD 0X10
 
 
 /// @brief send specific command to lcd screen 

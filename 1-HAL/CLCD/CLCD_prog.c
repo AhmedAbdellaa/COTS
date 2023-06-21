@@ -188,7 +188,7 @@ uint8 CLCD_u8WriteSpecialChar(uint8 copy_u8PatternNumber, uint8 *copy_pu8Pattern
 uint8 CLCD_VoidPrintChars(const uint8 *copy_u8charArray)
 {
     uint8 Local_u8ErrorState = OK;
-    if (copy_pu8PatternArr != NULL)
+    if (copy_u8charArray != NULL)
     {
         uint8 Local_u8strCounter = 0u;
         while (copy_u8charArray[Local_u8strCounter] != '\0')

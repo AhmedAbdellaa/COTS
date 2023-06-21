@@ -161,9 +161,9 @@ uint8 EXTI_u8SetSenceCtrl(EXTI_IntNum_t copy_IntNum, uint8 copy_SenseCtrl)
 uint8 EXTI_u8IntEnable(EXTI_IntNum_t copy_IntNum){
 	uint8 Local_u8Error_state = OK;
 	switch (copy_IntNum){
-		case INT0:SET_BIT(GICR,GICR_INT0);break;
-		case INT1:SET_BIT(GICR,GICR_INT1);break;
-		case INT2:SET_BIT(GICR,GICR_INT2);break;
+		case INT0:SET_BIT(GIFR,INTF0);SET_BIT(GICR,GICR_INT0);break;
+		case INT1:SET_BIT(GIFR,INTF1);SET_BIT(GICR,GICR_INT1);break;
+		case INT2:SET_BIT(GIFR,INTF2);SET_BIT(GICR,GICR_INT2);break;
 		default:Local_u8Error_state = NOK;break;
 	}
 	return Local_u8Error_state;
@@ -171,9 +171,9 @@ uint8 EXTI_u8IntEnable(EXTI_IntNum_t copy_IntNum){
 uint8 EXTI_u8IntDisable(EXTI_IntNum_t copy_IntNum){
 	uint8 Local_u8Error_state = OK;
 	switch (copy_IntNum){
-		case INT0:CLS_BIT(GICR,GICR_INT0);break;
-		case INT1:CLS_BIT(GICR,GICR_INT1);break;
-		case INT2:CLS_BIT(GICR,GICR_INT2);break;
+		case INT0:CLS_BIT(GICR,GICR_INT0);SET_BIT(GIFR,INTF0);break;
+		case INT1:CLS_BIT(GICR,GICR_INT1);SET_BIT(GIFR,INTF1);break;
+		case INT2:CLS_BIT(GICR,GICR_INT2);SET_BIT(GIFR,INTF2);break;
 		default:Local_u8Error_state = NOK;break;
 	}
 	return Local_u8Error_state;

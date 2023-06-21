@@ -17,9 +17,12 @@ uint8 T1S_voidPWM_Measure(uint16* reference_u16DutyCycle ,uint16* reference_u16P
 /// @return error state return OK if everything is okay
 uint8 T1S_voidScheduleMS(uint32 copy_u32Time_ms, sint16 copy_u16Periodic, void (*copy_pvFuncPtr)(void));
 
-/// @brief start pwm wave for given time 
+/// @brief start pwm wave for given time must adjust com to clear and wgm to 14 before start
 /// @param copy_u32CycleTime time of cycle in microseconds
-/// @param copy_u8Duty percent of duty time from cycle time
+/// @param copy_f64Duty percent of duty time from cycle time
 /// @return error state return OK if everything is okay
-uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, uint8 copy_u8Duty);
+uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, f64 copy_f64Duty);
+
+/// @brief stop pwm put busy flag to idle
+void T1S_voidStopPwm();
 #endif

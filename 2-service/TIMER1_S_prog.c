@@ -153,7 +153,7 @@ uint8 T1S_voidScheduleMS(uint32 copy_u32Time_ms, sint16 copy_s16Periodic, void (
     return Local_u8ErrorState;
 }
 // prescaler :1024 , min duty :(1024/16):64us  max duty  freq: 64us * 2^16 ->4194304 us
-uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, uint8 copy_u8Duty)
+uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, f64 copy_u8Duty)
 {
     uint8 Local_u8ErrorState = OK;
     if (TIMER1_u8BusyFlag == IDLE)
@@ -161,19 +161,17 @@ uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, uint8 copy_u8Duty)
         TIMER1_u8BusyFlag = BUSY;
         uint16 Local_u16ICR1Val = 0;
         uint16 Local_u16DutyValue = 0;
-        uint8 Local_u8ErrorState = OK;
-        // check if input time is allowed
-        if ((copy_u32CycleTime > 64) && (copy_u32CycleTime < 4194304) && ((copy_u8Duty >= 0) && (copy_u8Duty <= 100)))
-        {
-            // get ICR1 match value
-            Local_u16ICR1Val = copy_u32CycleTime / 64;
-            Local_u16DutyValue = (f64)Local_u16ICR1Val * ((f64)copy_u8Duty / 100.0);
-            // reset timer to ctc wgm , and normal com
-            TIMER_voidChangCOM_Mode(TIMER1, TIMER_COM_CLEAR);
-            TIMER_voidChangWGM_Mode(TIMER1, TIMER_WGM_PWM_FAST_ICR1);
+
+//            // get ICR1 match value
+            Local_u16ICR1Val = (f64)copy_u32CycleTime / 0.5;
+            Local_u16DutyValue = (f64)Local_u16ICR1Val * (copy_u8Duty / 100.0);
+
+            // check if input time is allowed
+            if (((f64)copy_u32CycleTime > 0.5) && (copy_u32CycleTime < 4194304) && ((copy_u8Duty >= 0) && (copy_u8Duty <= 100)))
+            {
             TIMER_voidStart_PWM(TIMER1A, Local_u16DutyValue, Local_u16ICR1Val);
 
-            TIMER1_u8BusyFlag = IDLE;
+            
         }
         else
         {
@@ -185,4 +183,8 @@ uint8 T1S_voidStartPwm(uint32 copy_u32CycleTime, uint8 copy_u8Duty)
         Local_u8ErrorState = BUSY_ERR;
     }
     return Local_u8ErrorState;
+}
+void T1S_voidStopPwm(){
+
+    TIMER1_u8BusyFlag = IDLE;
 }

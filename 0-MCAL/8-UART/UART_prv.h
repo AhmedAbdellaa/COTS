@@ -2,7 +2,7 @@
 #define UART_PRV_H
 
 #define IDLE 1
-#define BUSY 1
+#define BUSY 2
 
 #define UART_UMSEL_ASYNCHRONOUS         1u
 #define UART_UMSEL_SYNCHRONOUS          2u

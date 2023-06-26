@@ -354,8 +354,9 @@ static void _helper_VoidNumToStr(sint32 copy_s32number)
 
 	if (copy_s32number == 0)
 	{
-		Local_u8Buffer[0] = '0';
-		Local_u8Buffer[1] = '\0';
+		// Local_u8Buffer[0] = '0';
+		// Local_u8Buffer[1] = '\0';
+		UART_voidTransmit('0');
 		return;
 	}
 

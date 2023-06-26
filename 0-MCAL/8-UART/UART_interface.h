@@ -1,5 +1,5 @@
 #ifndef UART_INTERFACE
-
+#define UART_INTERFACE
 /*work on pins D0 and D1*/
 
 /// @brief init uart from cfg file

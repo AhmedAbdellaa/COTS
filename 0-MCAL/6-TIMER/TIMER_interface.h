@@ -105,6 +105,9 @@ void TIMER0_voidInit(void);
 /// @brief initialize timer1 base on configuration file 
 void TIMER1_voidInit(void);
 
+/// @brief initialize timer2 base on configuration file 
+void TIMER2_voidInit(void);
+
 /// @brief start overflow interrupt for given timer number *timer will enter your isr function when it reach number of overflow you pass
 /// @param copy_TINUM timer number choose from : [TIMER0,TIMER1,TIMER2]
 /// @param reference_TimerCallbackConf pass preload value and number of overflows

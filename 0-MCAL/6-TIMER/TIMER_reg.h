@@ -3,6 +3,9 @@
 
 // Timer/Counter Interrupt Mask Register
 #define TIMSK *((volatile uint8*)0x59)
+#define TIMSK_OCIE2 7U  //Timer/Counter2 Output Compare Match Interrupt Enable
+#define TIMSK_TOIE2 6U  //Timer/Counter2 Overflow Interrupt Enable
+
 #define TIMSK_OCIE0 1U  //Timer/Counter0 Output Compare Match Interrupt Enable
 #define TIMSK_TOIE0 0U  //Timer/Counter0 Overflow Interrupt Enable
 
@@ -14,6 +17,9 @@
 
 //Timer/Counter Interrupt Flag Register
 #define TIFR *((volatile uint8*)0x58)
+#define TIFR_OCIF2 7U  //Timer/Counter2 Output Compare Match Flag
+#define TIFR_TOIF2 6U  //Timer/Counter2 Overflow Flag
+
 #define TIFR_OCIF0 1U  //Timer/Counter0 Output Compare Match Flag
 #define TIFR_TOIF0 0U  //Timer/Counter0 Overflow Flag
 
@@ -93,6 +99,24 @@
 #define ICR1L *((volatile uint8*)0x46)
 
 /*************************end timer1****************************************/
+/*************************timer2****************************************/
+//define Timer/Counter Control Register
+#define TCCR2 *((volatile uint8*)0x45)
+#define TCCR2_FOC2 7U //Force Output Compare
+// Waveform Generation Mode
+#define TCCR2_WGM20 6U
+#define TCCR2_WGM21 3U
+// Compare Match Output Mode
+#define TCCR2_COM21 5U
+#define TCCR2_COM20 4U
+// Clock Select Bit Description
+#define TCCR2_CS_Mask 0B11111000
+
+//Timer/Counter Register 
+#define TCNT2 *((volatile uint8*)0x44)
+//Output Compare Register
+#define OCR2 *((volatile uint8*)0x43)
+/*************************end timer2****************************************/
 
 
 #endif
